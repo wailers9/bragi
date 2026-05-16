@@ -3,7 +3,7 @@
     "default_agent": "demo",
     "model": "gpt-5.5",
     "reasoning_effort": null,
-    "temperature": 1.2,
+    "temperature": 0.95,
     "top_p": 0.98
   },
   "runtime": {

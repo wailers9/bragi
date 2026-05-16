@@ -92,7 +92,7 @@ export OPENAI_API_KEY="你的 OpenAI API Key"
     "default_agent": "demo",
     "model": "gpt-5.5",
     "reasoning_effort": null,
-    "temperature": 1.2,
+    "temperature": 0.95,
     "top_p": 0.98
   }
 }
@@ -114,6 +114,30 @@ export DEEPSEEK_API_KEY="你的 DeepSeek API Key"
 
 ```bash
 --agent deepseek --model deepseek-chat
+```
+
+### 模型建议
+
+建议优先使用 `deepseek-chat` 写故事。它的成本和速度更适合长篇互动生成，也更适合频繁续写、更新角色和推进事件。
+
+如果你想要更强的世界观搭建能力，可以先用 `gpt-5.5` 生成世界、初始化时间和空间节点，再用 `deepseek-chat` 承担后续故事续写：
+
+```bash
+PYTHONPATH=src python -m story_world.cli init-demo \
+  --agent openai \
+  --model gpt-5.5 \
+  --prompt "一个被月亮潮汐撕裂的海上王国" \
+  --time-id 1,2,3 \
+  --space-id 2,1,1 \
+  --protagonist "年轻的灯塔学徒"
+
+PYTHONPATH=src python -m story_world.cli story-start \
+  --agent deepseek \
+  --model deepseek-chat \
+  --world-id "<world_id>" \
+  --time-id 1,2,3 \
+  --space-id 2,1,1 \
+  --protagonist "年轻的灯塔学徒"
 ```
 
 ## 配置文件
@@ -175,8 +199,8 @@ runtime/worlds/<world_id>/
 
 ```bash
 PYTHONPATH=src python -m story_world.cli play \
-  --agent openai \
-  --model gpt-5.5 \
+  --agent deepseek \
+  --model deepseek-chat \
   --prompt "一个被月亮潮汐撕裂的海上王国" \
   --protagonist "年轻的灯塔学徒" \
   --world-requirements "底层规则简单易懂，但必须有强烈的新鲜感" \
