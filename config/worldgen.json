@@ -1,0 +1,63 @@
+{
+  "agent": {
+    "default_agent": "demo",
+    "model": "gpt-5.5",
+    "reasoning_effort": null,
+    "temperature": 1.2,
+    "top_p": 0.98
+  },
+  "runtime": {
+    "worlds_root": "runtime/worlds"
+  },
+  "world_generation": {
+    "personal_requirements": "最多三条有趣、富有想象力的特殊底层规则，每条一句话；其它未列出的规则符合现实。"
+  },
+  "story": {
+    "generation_requirements": "随机创作风格。",
+    "min_story_chars": 1000,
+    "debug_story_agent_input": true,
+    "print_story_agent_input": false,
+    "continuity_recent_full_segments": 3,
+    "continuity_older_summary_chars": 180,
+    "random_context_history_count": 2,
+    "random_context_space_count": 2,
+    "close_character_detail_base_probability": 0.85,
+    "distant_character_detail_base_probability": 0.25,
+    "character_departure_probability": 0.2,
+    "character_departure_relationship_weight": 0.8,
+    "character_arrival_probability": 0.2,
+    "character_extra_arrival_probability": 0.25,
+    "character_max_new_arrivals": 3,
+    "story_length_mode": "normal",
+    "ending_after_interactions": 3,
+    "ending_probability": 0.5,
+    "ending_modes": {
+      "normal": {"after_interactions": 3, "probability": 0.5},
+      "long": {"after_interactions": 15, "probability": 0.1},
+      "infinite": {"after_interactions": null, "probability": 0.0}
+    },
+    "update_cadence": "normal",
+    "update_cadences": {
+      "slower": {"base_probability": 0.02, "growth_per_turn": 0.04, "max_probability": 0.45},
+      "normal": {"base_probability": 0.05, "growth_per_turn": 0.08, "max_probability": 0.65},
+      "faster": {"base_probability": 0.12, "growth_per_turn": 0.12, "max_probability": 0.85}
+    }
+  },
+  "space_depth": 3,
+  "history_depth": 3,
+  "space_default_branching": 3,
+  "history_default_branching": 3,
+  "neighborhood": {
+    "space_radius_by_level": [0, 1, 1, 2],
+    "history_radius_by_level": [0, 0, 1, 1]
+  },
+  "space_fields": {
+    "cities": {"default_count": 3},
+    "creatures": {"default_count": 4},
+    "population": {"bands": ["稀疏", "中等", "密集"]}
+  },
+  "history_fields": {
+    "public_events": {"default_count": 2},
+    "personal_events": {"default_count": 3}
+  }
+}

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bragi</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="left">
+        <header class="topbar">
+          <div>
+            <h1>Bragi</h1>
+            <p id="status">架空世界构建与故事模拟工具，支持长记忆和跨故事一致性。</p>
+          </div>
+          <div class="actions">
+            <button id="startBtn" type="button">创建世界</button>
+            <button id="newStoryBtn" type="button" disabled>新故事</button>
+            <button id="continueIntroBtn" type="button" disabled>继续故事</button>
+          </div>
+        </header>
+
+        <section class="panel manager">
+          <div class="managerGrid">
+            <div>
+              <div class="sectionHead compact">
+                <h2>世界</h2>
+                <button id="refreshWorldsBtn" type="button">刷新</button>
+              </div>
+              <div id="worldList" class="list"></div>
+            </div>
+            <div>
+              <div class="sectionHead compact">
+                <h2>故事</h2>
+                <span id="worldTitle" class="muted">请选择世界</span>
+              </div>
+              <div id="storyList" class="list"></div>
+            </div>
+          </div>
+        </section>
+
+        <form id="startForm" class="panel">
+          <label>
+            世界提示词
+            <textarea id="prompt" rows="4" placeholder="可留空，默认童话风格的架空世界">童话风格的架空世界</textarea>
+          </label>
+          <div class="inlineNote">时间编号与空间编号将在开始时随机生成。</div>
+          <label>
+            主角
+            <input id="protagonist" placeholder="可留空，默认随机身份的主角" />
+          </label>
+          <label>
+            世界要求
+            <input id="worldReq" placeholder="可留空，默认要求简单、有趣、有想象力" />
+          </label>
+          <label>
+            创作要求
+            <input id="genReq" placeholder="可留空，默认随机创作风格" />
+          </label>
+          <label>
+            故事长度
+            <select id="storyMode">
+              <option value="normal">普通故事</option>
+              <option value="long">长故事</option>
+              <option value="infinite">无限故事</option>
+            </select>
+          </label>
+          <label>
+            Agent
+            <select id="agent">
+              <option value="openai">openai</option>
+              <option value="deepseek" selected>deepseek</option>
+            </select>
+          </label>
+          <div class="grid2">
+            <label>
+              世界规模
+              <select id="worldScale">
+                <option value="small">小规模</option>
+                <option value="medium">中等规模</option>
+                <option value="large">大规模</option>
+              </select>
+            </label>
+            <label>
+              Model
+              <select id="model">
+                <option value="gpt-5.4">gpt-5.4</option>
+                <option value="gpt-5.4-mini">gpt-5.4-mini</option>
+                <option value="gpt-5.5">gpt-5.5</option>
+                <option value="gpt-5-nano">gpt-5-nano</option>
+                <option value="deepseek-chat" selected>deepseek-chat</option>
+                <option value="deepseek-reasoner">deepseek-reasoner</option>
+              </select>
+            </label>
+          </div>
+        </form>
+
+        <section class="story panel">
+          <div class="sectionHead">
+            <h2>故事</h2>
+            <span id="turnBadge">未开始</span>
+          </div>
+          <article id="introText" class="introText"></article>
+          <div id="storyHistory" class="storyHistory"></div>
+          <article id="storyText" class="storyText"></article>
+          <section id="endingBlock" class="endingBlock">
+            <div class="endingLabel">故事结尾</div>
+            <article id="endingText" class="endingText"></article>
+          </section>
+          <div id="choices" class="choices"></div>
+          <form id="choiceForm" class="choiceForm">
+            <input id="choiceText" placeholder="输入下一步导向，或留空直接推进" />
+            <button id="submitChoiceBtn" type="submit" disabled>推进故事</button>
+          </form>
+        </section>
+      </section>
+
+      <aside class="right">
+        <section class="panel">
+          <h2>状态</h2>
+          <dl class="facts">
+            <dt>模式</dt><dd id="modeInfo">-</dd>
+            <dt>进度</dt><dd id="progressInfo">-</dd>
+            <dt>故事token</dt><dd id="sessionTokens">-</dd>
+            <dt>世界token</dt><dd id="worldTokens">-</dd>
+          </dl>
+        </section>
+
+        <section class="panel">
+          <h2>变化提醒</h2>
+          <div id="notices" class="notices"></div>
+        </section>
+
+        <section class="panel">
+          <h2>当前节点</h2>
+          <div id="currentNodes" class="mono small"></div>
+        </section>
+
+        <section class="panel">
+          <h2>人物</h2>
+          <div id="characters" class="small"></div>
+        </section>
+
+        <section class="panel">
+          <h2>事件</h2>
+          <div id="events" class="small"></div>
+        </section>
+      </aside>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
