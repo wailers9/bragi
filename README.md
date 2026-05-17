@@ -65,9 +65,18 @@ cd bragi
 
 创建虚拟环境：
 
+macOS / Linux：
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
+
+Windows PowerShell：
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 ```
 
 安装项目：
@@ -88,8 +97,16 @@ python -m pytest -q
 
 ### OpenAI
 
+macOS / Linux：
+
 ```bash
 export OPENAI_API_KEY="你的 OpenAI API Key"
+```
+
+Windows PowerShell：
+
+```powershell
+$env:OPENAI_API_KEY="你的 OpenAI API Key"
 ```
 
 使用 OpenAI 时，默认模型写在 `config/worldgen.json`：
@@ -114,8 +131,16 @@ export OPENAI_API_KEY="你的 OpenAI API Key"
 
 ### DeepSeek
 
+macOS / Linux：
+
 ```bash
 export DEEPSEEK_API_KEY="你的 DeepSeek API Key"
+```
+
+Windows PowerShell：
+
+```powershell
+$env:DEEPSEEK_API_KEY="你的 DeepSeek API Key"
 ```
 
 使用方式：
@@ -129,6 +154,8 @@ export DEEPSEEK_API_KEY="你的 DeepSeek API Key"
 建议优先使用 `deepseek-chat` 写故事。它的成本和速度更适合长篇互动生成，也更适合频繁续写、更新角色和推进事件。
 
 如果你想要更强的世界观搭建能力，可以先用 `gpt-5.5` 生成世界、初始化时间和空间节点，再用 `deepseek-chat` 承担后续故事续写：
+
+macOS / Linux：
 
 ```bash
 PYTHONPATH=src python -m story_world.cli init-demo \
@@ -148,6 +175,27 @@ PYTHONPATH=src python -m story_world.cli story-start \
   --protagonist "年轻的灯塔学徒"
 ```
 
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli init-demo `
+  --agent openai `
+  --model gpt-5.5 `
+  --prompt "一个被月亮潮汐撕裂的海上王国" `
+  --time-id 1,2,3 `
+  --space-id 2,1,1 `
+  --protagonist "年轻的灯塔学徒"
+
+python -m story_world.cli story-start `
+  --agent deepseek `
+  --model deepseek-chat `
+  --world-id "<world_id>" `
+  --time-id 1,2,3 `
+  --space-id 2,1,1 `
+  --protagonist "年轻的灯塔学徒"
+```
+
 ## 配置文件
 
 默认会读取：
@@ -158,8 +206,16 @@ config/worldgen.json
 
 如果你想保留自己的配置，可以复制示例：
 
+macOS / Linux：
+
 ```bash
 cp config/worldgen.example.json config/worldgen.local.json
+```
+
+Windows PowerShell：
+
+```powershell
+Copy-Item config\worldgen.example.json config\worldgen.local.json
 ```
 
 然后运行命令时指定：
@@ -185,11 +241,24 @@ cp config/worldgen.example.json config/worldgen.local.json
 
 不配置 API，也可以先跑通完整世界初始化流程：
 
+macOS / Linux：
+
 ```bash
 PYTHONPATH=src python -m story_world.cli init-demo \
   --prompt "一个漂浮群岛上的魔法工业时代" \
   --time-id 2,1,3 \
   --space-id 1,2,2 \
+  --protagonist "年轻的飞艇机械师"
+```
+
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli init-demo `
+  --prompt "一个漂浮群岛上的魔法工业时代" `
+  --time-id 2,1,3 `
+  --space-id 1,2,2 `
   --protagonist "年轻的飞艇机械师"
 ```
 
@@ -205,6 +274,8 @@ runtime/worlds/<world_id>/
 
 用真实 Agent 创建世界并开始故事：
 
+macOS / Linux：
+
 ```bash
 PYTHONPATH=src python -m story_world.cli play \
   --agent deepseek \
@@ -212,6 +283,19 @@ PYTHONPATH=src python -m story_world.cli play \
   --prompt "一个被月亮潮汐撕裂的海上王国" \
   --protagonist "年轻的灯塔学徒" \
   --world-requirements "底层规则简单易懂，但必须有强烈的新鲜感" \
+  --generation-requirements "减少景物堆砌，像小说一样清楚、生动、有悬念"
+```
+
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli play `
+  --agent deepseek `
+  --model deepseek-chat `
+  --prompt "一个被月亮潮汐撕裂的海上王国" `
+  --protagonist "年轻的灯塔学徒" `
+  --world-requirements "底层规则简单易懂，但必须有强烈的新鲜感" `
   --generation-requirements "减少景物堆砌，像小说一样清楚、生动、有悬念"
 ```
 
@@ -225,6 +309,8 @@ PYTHONPATH=src python -m story_world.cli play \
 
 只生成一段并退出：
 
+macOS / Linux：
+
 ```bash
 PYTHONPATH=src python -m story_world.cli play \
   --agent openai \
@@ -233,7 +319,20 @@ PYTHONPATH=src python -m story_world.cli play \
   --once
 ```
 
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli play `
+  --agent openai `
+  --prompt "一座建在巨兽背上的移动城市" `
+  --protagonist "被流放的城市医生" `
+  --once
+```
+
 打印完整内部上下文：
+
+macOS / Linux：
 
 ```bash
 PYTHONPATH=src python -m story_world.cli play \
@@ -243,12 +342,32 @@ PYTHONPATH=src python -m story_world.cli play \
   --full
 ```
 
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli play `
+  --agent openai `
+  --world-id "<world_id>" `
+  --protagonist "年轻的灯塔学徒" `
+  --full
+```
+
 ## Web 可视化界面
 
 启动本地 Web UI：
 
+macOS / Linux：
+
 ```bash
 PYTHONPATH=src python3 -m story_world.web --host 127.0.0.1 --port 8765
+```
+
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.web --host 127.0.0.1 --port 8765
 ```
 
 打开：
@@ -269,6 +388,8 @@ Web UI 可以完成：
 
 ### 1. 创建世界并初始化当前位置
 
+macOS / Linux：
+
 ```bash
 PYTHONPATH=src python -m story_world.cli init-demo \
   --agent openai \
@@ -278,7 +399,21 @@ PYTHONPATH=src python -m story_world.cli init-demo \
   --protagonist "失去影子的书记官"
 ```
 
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli init-demo `
+  --agent openai `
+  --prompt "一个所有影子都拥有记忆的王国" `
+  --time-id 1,2,3 `
+  --space-id 2,1,1 `
+  --protagonist "失去影子的书记官"
+```
+
 ### 2. 扩写某个历史节点
+
+macOS / Linux：
 
 ```bash
 PYTHONPATH=src python -m story_world.cli enrich-history \
@@ -288,7 +423,20 @@ PYTHONPATH=src python -m story_world.cli enrich-history \
   --time-id 1,2,2
 ```
 
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli enrich-history `
+  --agent openai `
+  --world-id "<world_id>" `
+  --prompt "一个所有影子都拥有记忆的王国" `
+  --time-id 1,2,2
+```
+
 ### 3. 扩写某个空间节点
+
+macOS / Linux：
 
 ```bash
 PYTHONPATH=src python -m story_world.cli enrich-space \
@@ -298,7 +446,20 @@ PYTHONPATH=src python -m story_world.cli enrich-space \
   --space-id 2,1,2
 ```
 
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli enrich-space `
+  --agent openai `
+  --world-id "<world_id>" `
+  --prompt "一个所有影子都拥有记忆的王国" `
+  --space-id 2,1,2
+```
+
 ### 4. 构建故事上下文
+
+macOS / Linux：
 
 ```bash
 PYTHONPATH=src python -m story_world.cli build-context \
@@ -307,7 +468,19 @@ PYTHONPATH=src python -m story_world.cli build-context \
   --space-id 2,1,1
 ```
 
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli build-context `
+  --world-id "<world_id>" `
+  --time-id 1,2,3 `
+  --space-id 2,1,1
+```
+
 ### 5. 初始化角色
+
+macOS / Linux：
 
 ```bash
 PYTHONPATH=src python -m story_world.cli init-characters \
@@ -319,7 +492,22 @@ PYTHONPATH=src python -m story_world.cli init-characters \
   --others "生成2到4个和主线强相关的角色"
 ```
 
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli init-characters `
+  --agent openai `
+  --world-id "<world_id>" `
+  --time-id 1,2,3 `
+  --space-id 2,1,1 `
+  --protagonist "失去影子的书记官" `
+  --others "生成2到4个和主线强相关的角色"
+```
+
 ### 6. 开始故事会话
+
+macOS / Linux：
 
 ```bash
 PYTHONPATH=src python -m story_world.cli story-start \
@@ -331,12 +519,37 @@ PYTHONPATH=src python -m story_world.cli story-start \
   --generation-requirements "像通俗幻想小说，节奏快，人物行动明确"
 ```
 
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli story-start `
+  --agent openai `
+  --world-id "<world_id>" `
+  --time-id 1,2,3 `
+  --space-id 2,1,1 `
+  --protagonist "失去影子的书记官" `
+  --generation-requirements "像通俗幻想小说，节奏快，人物行动明确"
+```
+
 ### 7. 提交选择并继续
+
+macOS / Linux：
 
 ```bash
 PYTHONPATH=src python -m story_world.cli story-choose \
   --agent openai \
   --session-id "<session_id>" \
+  --choice-text "去档案馆寻找第一任国王的影子记录"
+```
+
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.cli story-choose `
+  --agent openai `
+  --session-id "<session_id>" `
   --choice-text "去档案馆寻找第一任国王的影子记录"
 ```
 
@@ -424,8 +637,17 @@ python -m pytest -q
 
 运行 Web UI：
 
+macOS / Linux：
+
 ```bash
 PYTHONPATH=src python3 -m story_world.web --host 127.0.0.1 --port 8765
+```
+
+Windows PowerShell：
+
+```powershell
+$env:PYTHONPATH="src"
+python -m story_world.web --host 127.0.0.1 --port 8765
 ```
 
 ## 适合用来做什么
